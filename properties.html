@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land &amp; Business Office — Canyon Creek</title>
+<meta name="description" content="Browse ranches, homesteads, and businesses for sale in Canyon Creek, a Red Dead Redemption roleplay server.">
+<link rel="icon" href="assets/canyon-creek-logo.png">
+<link rel="stylesheet" href="css/properties.css">
+</head>
+<body>
+<div class="grain-veil"></div>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="brand">
+      <img src="assets/canyon-creek-logo.png" alt="Canyon Creek emblem">
+      <span class="brand-text">
+        <span class="big">Canyon Creek</span>
+        <span class="small">EST. 1899 &middot; TERRITORY OFFICE</span>
+      </span>
+    </a>
+    <button class="nav-burger" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <nav class="nav-links">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="rules.html" data-page="rules.html">Rules</a>
+      <a href="properties.html" data-page="properties.html">Land &amp; Business</a>
+      <a href="whitelist.html" data-page="whitelist.html" class="nav-cta">Apply for Whitelist</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="container">
+    <span class="kicker">TERRITORY LISTINGS</span>
+    <h1>Land &amp; Business Office</h1>
+    <p>Ranches, farms, homesteads, storefronts, and open land currently on the books across Canyon Creek. Listings are managed by the Territory Office.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Listings</button>
+      <button class="filter-btn" data-filter="ranch">Ranches</button>
+      <button class="filter-btn" data-filter="farm">Farms</button>
+      <button class="filter-btn" data-filter="home">Homesteads</button>
+      <button class="filter-btn" data-filter="business">Businesses</button>
+      <button class="filter-btn" data-filter="land">Land Parcels</button>
+    </div>
+
+    <div class="property-grid" id="propertyGrid"></div>
+    <p class="empty-note" id="emptyNote">No listings match this filter right now — check back soon.</p>
+  </div>
+</section>
+
+<!-- ===================== COMING SOON DOSSIER ===================== -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">UNDER CONSTRUCTION</span>
+      <h2>Your holdings, in one place</h2>
+      <p>Once character linking goes live, this page will show your own money, UCP items, and everything you personally own in the territory.</p>
+    </div>
+    <div class="dossier">
+      <div class="dossier-stamp">COMING SOON</div>
+      <h3 style="font-family:var(--font-display); margin:0; font-size:1.3rem; color:var(--paper);">My Character Dossier</h3>
+      <div class="dossier-grid">
+        <div class="dossier-field"><span class="flabel">MONEY ON HAND</span><span class="fval">$ ---</span></div>
+        <div class="dossier-field"><span class="flabel">UCP INVENTORY</span><span class="fval">Locked</span></div>
+        <div class="dossier-field"><span class="flabel">OWNED PROPERTIES</span><span class="fval">Locked</span></div>
+        <div class="dossier-field"><span class="flabel">OWNED BUSINESSES</span><span class="fval">Locked</span></div>
+      </div>
+      <p class="dossier-note">This section will require Steam account verification, which is planned for a future update. Whitelisted settlers will be able to link their account and see this information update in real time as their character earns, spends, and buys land.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DEED MODAL ===================== -->
+<div class="deed-modal" id="deedModal">
+  <div class="deed-modal-inner">
+    <button class="deed-modal-close" id="deedModalClose" aria-label="Close">&times;</button>
+    <div class="deed-modal-photo" id="dmPhotoWrap"><img id="dmPhoto" alt=""></div>
+    <span class="ptype" id="dmType">RANCH</span>
+    <h3 id="dmName">Property Name</h3>
+    <p id="dmDesc">Description.</p>
+    <div class="dm-meta">
+      <div>PRICE<b id="dmPrice">$0</b></div>
+      <div>SIZE<b id="dmSize">—</b></div>
+      <div>STATUS<b id="dmStatus">—</b></div>
+      <div>LISTED BY<b>Territory Office</b></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="assets/canyon-creek-logo.png" alt="">
+        <span>Canyon Creek</span>
+      </div>
+      <p>A whitelisted Red Dead Redemption roleplay territory. Built by settlers, held together by uneasy law.</p>
+    </div>
+    <div class="footer-col">
+      <h4>TERRITORY</h4>
+      <a href="index.html">Home</a>
+      <a href="rules.html">Rulebook</a>
+      <a href="properties.html">Land &amp; Business</a>
+      <a href="whitelist.html">Whitelist Application</a>
+    </div>
+    <div class="footer-col">
+      <h4>OFFICE</h4>
+      <a href="admin.html">Territory Office (Staff)</a>
+      <a href="#">Discord Server</a>
+      <a href="#">Steam — Coming Soon</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 1899–2026 Canyon Creek Territory Office. A fan-made roleplay community, not affiliated with Rockstar Games.</span>
+    <span>Built for settlers, by settlers.</span>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+(function(){
+  const grid = document.getElementById('propertyGrid');
+  const emptyNote = document.getElementById('emptyNote');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  let activeFilter = 'all';
+
+  const typeLabel = CC_CATEGORY_LABEL;
+  const sceneClass = CC_CATEGORY_SCENE;
+
+  function render(){
+    const all = ccGetProperties();
+    const list = activeFilter === 'all' ? all : all.filter(p => p.category === activeFilter);
+    grid.innerHTML = '';
+    emptyNote.style.display = list.length ? 'none' : 'block';
+
+    list.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'property-card';
+      const scene = sceneClass[p.category] || 'scene-home';
+      const imgTag = p.image
+        ? `<img src="${CC_IMAGE_PATH}${encodeURIComponent(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.remove(); this.parentElement.classList.add('${scene}');">`
+        : '';
+      card.innerHTML = `
+        <div class="property-scene ${p.image ? '' : scene}">
+          ${imgTag}
+          <span class="property-status ${p.status}">${p.status}</span>
+        </div>
+        <div class="property-body">
+          <span class="ptype">${(typeLabel[p.category] || p.category).toUpperCase()}</span>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="desc">${escapeHtml(p.desc || '')}</p>
+          <div class="property-meta">
+            <span class="price">${escapeHtml(p.price)}</span>
+            <span class="size">${escapeHtml(p.size)}</span>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(p));
+      grid.appendChild(card);
+    });
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str == null ? '' : str;
+    return d.innerHTML;
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      render();
+    });
+  });
+
+  const modal = document.getElementById('deedModal');
+  function openModal(p){
+    const photoWrap = document.getElementById('dmPhotoWrap');
+    const photo = document.getElementById('dmPhoto');
+    if(p.image){
+      photo.src = CC_IMAGE_PATH + encodeURIComponent(p.image);
+      photo.onerror = () => { photoWrap.style.display = 'none'; };
+      photo.onload = () => { photoWrap.style.display = 'block'; };
+      photoWrap.style.display = 'block';
+    }else{
+      photoWrap.style.display = 'none';
+    }
+    document.getElementById('dmType').textContent = (typeLabel[p.category] || p.category).toUpperCase();
+    document.getElementById('dmName').textContent = p.name;
+    document.getElementById('dmDesc').textContent = p.desc || '';
+    document.getElementById('dmPrice').textContent = p.price;
+    document.getElementById('dmSize').textContent = p.size;
+    document.getElementById('dmStatus').textContent = p.status;
+    modal.classList.add('open');
+  }
+  document.getElementById('deedModalClose').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('open'); });
+
+  render();
+})();
+</script>
+</body>
+</html>
