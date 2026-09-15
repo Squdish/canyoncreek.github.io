@@ -370,10 +370,10 @@ section{ position: relative; }
 .section-head h2{
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 3.6vw, 2.6rem);
-  color: var(--panel);
+  color: var(--paper);
   margin: 0 0 12px;
 }
-.section-head p{ color: var(--panel); margin:0; }
+.section-head p{ color: var(--paper-dim); margin:0; }
 
 .on-paper{
   background: var(--paper);
@@ -452,7 +452,7 @@ section{ position: relative; }
 .about-split .signoff{
   font-family: var(--font-body);
   font-style: italic;
-  color: var(--panel);
+  color: var(--gold-bright);
   margin-top: 22px;
 }
 .frame-block{
