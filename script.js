@@ -2,10 +2,14 @@
 // CANYON CREEK — shared site behaviour
 // ==========================================================================
 
+// Replace this with the Discord webhook URL for whitelist applications.
+const DISCORD_WHITELIST_WEBHOOK = 'PASTE_DISCORD_WEBHOOK_URL_HERE';
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initDust();
   markActiveNav();
+  initWhitelistForm();
 });
 
 function initNav(){
@@ -46,4 +50,79 @@ function initDust(){
     mote.style.height = size + 'px';
     field.appendChild(mote);
   }
+}
+
+function initWhitelistForm(){
+  const form = document.getElementById('whitelistForm');
+  if(!form) return;
+
+  const message = document.getElementById('formMsg');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if(DISCORD_WHITELIST_WEBHOOK === 'PASTE_DISCORD_WEBHOOK_URL_HERE'){
+      showWhitelistMessage(message, 'The whitelist form is not connected yet. Add the Discord webhook URL in script.js.', true);
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Filing Application...';
+
+    const application = {
+      discord: document.getElementById('discord').value.trim(),
+      age: document.getElementById('age').value,
+      characterName: document.getElementById('charname').value.trim(),
+      experience: document.getElementById('experience').value,
+      backstory: document.getElementById('backstory').value.trim(),
+      scenario: document.getElementById('scenario').value.trim()
+    };
+
+    const payload = {
+      username: 'Canyon Creek Whitelist',
+      embeds: [{
+        title: 'New Whitelist Application',
+        color: 11534336,
+        fields: [
+          {name: 'Discord', value: application.discord, inline: true},
+          {name: 'Age', value: application.age, inline: true},
+          {name: 'Character Name', value: application.characterName, inline: true},
+          {name: 'Roleplay Experience', value: application.experience},
+          {name: 'Character Backstory', value: limitDiscordField(application.backstory)},
+          {name: 'Scenario Response', value: limitDiscordField(application.scenario)}
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try{
+      const response = await fetch(DISCORD_WHITELIST_WEBHOOK, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      });
+
+      if(!response.ok) throw new Error(`Discord returned ${response.status}`);
+
+      showWhitelistMessage(message, 'Application filed. The Territory Office will review your paperwork and reach out on Discord.');
+      submitButton.textContent = 'Application Filed';
+    }catch(error){
+      console.error('Whitelist submission failed:', error);
+      showWhitelistMessage(message, 'The application could not be filed right now. Please try again or contact staff on Discord.', true);
+      submitButton.disabled = false;
+      submitButton.textContent = 'File Application';
+    }
+  });
+}
+
+function showWhitelistMessage(message, text, isError = false){
+  message.textContent = text;
+  message.classList.toggle('error', isError);
+  message.classList.add('show');
+  message.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function limitDiscordField(value){
+  return value.length > 1024 ? value.slice(0, 1021) + '...' : value;
 }

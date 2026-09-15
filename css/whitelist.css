@@ -790,6 +790,7 @@ section{ position: relative; }
   font-size: .85rem;
 }
 .form-msg.show{ display:block; }
+.form-msg.error{ color:#8b2418; border-color:#8b2418; }
 
 .steam-box{
   border: 1px dashed var(--iron);

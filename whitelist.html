@@ -175,15 +175,5 @@
 </footer>
 
 <script src="script.js"></script>
-<script>
-  document.getElementById('whitelistForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const msg = document.getElementById('formMsg');
-    msg.classList.add('show');
-    msg.scrollIntoView({behavior:'smooth', block:'nearest'});
-    this.querySelector('button[type="submit"]').textContent = 'Application Filed ✓';
-    this.querySelector('button[type="submit"]').disabled = true;
-  });
-</script>
 </body>
 </html>
