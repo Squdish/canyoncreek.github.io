@@ -474,7 +474,7 @@ section{ position: relative; }
   justify-content: space-between;
   padding: 12px 0;
   border-bottom: 1px dashed rgba(255,255,255,.15);
-  font-family: var(--font-stamp);
+  font-family: var(--panel);
   font-size: .84rem;
 }
 .frame-block .stat-line:last-child{ border-bottom:none; }
