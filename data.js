@@ -10,7 +10,7 @@ const CC_STORAGE_KEY = 'ccProperties_v1';
 // Drop the matching screenshot into /images/properties/ and set this field from
 // admin.html — see images/properties/README.txt for the full walkthrough.
 // Leave it as '' to show the default colored placeholder instead of a photo.
-const CC_IMAGE_PATH = 'images/properties/';
+const CC_IMAGE_PATH = '/images/properties/';
 
 const CC_DEFAULT_PROPERTIES = [
   /* ---------------- RANCHES ---------------- */
