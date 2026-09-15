@@ -373,7 +373,7 @@ section{ position: relative; }
   color: var(--paper);
   margin: 0 0 12px;
 }
-.section-head p{ color: var(--paper-dim); margin:0; }
+.section-head p{ color: var(--paper); margin:0; }
 
 .on-paper{
   background: var(--paper);
@@ -452,7 +452,7 @@ section{ position: relative; }
 .about-split .signoff{
   font-family: var(--font-body);
   font-style: italic;
-  color: var(--gold-bright);
+  color: var(--paper);
   margin-top: 22px;
 }
 .frame-block{
