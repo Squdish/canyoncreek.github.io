@@ -3,7 +3,7 @@
 // ==========================================================================
 
 // Replace this with the Discord webhook URL for whitelist applications.
-const DISCORD_WHITELIST_WEBHOOK = 'PASTE_DISCORD_WEBHOOK_URL_HERE';
+const DISCORD_WHITELIST_WEBHOOK = 'https://discord.com/api/webhooks/1549500355505819799/i_8Boz_dNWJwnXm55i8tZmuELHWmePTMX2UTZ-MQ6fYorx-X79sBAZNVYFHJjE_9_bvx';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
