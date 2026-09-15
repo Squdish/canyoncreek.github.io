@@ -25,7 +25,7 @@ function initNav(){
 }
 
 function markActiveNav(){
-  const path = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
+  const path = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
     if(a.dataset.page === path) a.classList.add('active');
   });
